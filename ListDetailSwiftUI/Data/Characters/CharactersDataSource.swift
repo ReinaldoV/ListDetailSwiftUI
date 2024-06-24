@@ -20,11 +20,24 @@ struct CharacterListRequest: APIRequestType {
 }
 
 struct CharacterListDTO: Decodable {
+    var info: InfoDTO
+    var results: [CharacterDTO]
+}
+
+struct InfoDTO: Decodable {
     var count: Int
     var pages: Int
     var next: String?
     var prev: String?
-    var results: [CharacterDTO]
+}
+
+extension InfoDTO {
+    func toResponseInfo() -> ResponseInfo {
+        return ResponseInfo(count: self.count,
+                            pages: self.pages,
+                            next: self.next,
+                            prev: self.prev)
+    }
 }
 
 struct CharacterDTO: Decodable {
@@ -39,4 +52,26 @@ enum StatusDTO: String, Codable {
     case alive = "Alive"
     case dead = "Dead"
     case unknown
+    
+    func toStatus() -> Status {
+        switch self {
+        case .alive:
+            return .alive
+        case .dead:
+            return .dead
+        case .unknown:
+            return .unknown
+        }
+    }
 }
+
+extension CharacterDTO {
+    func toCharacter() -> Character {
+        return Character(id: self.id,
+                         name: self.name,
+                         status: self.status.toStatus(),
+                         species: self.species,
+                         image: self.image)
+    }
+}
+
