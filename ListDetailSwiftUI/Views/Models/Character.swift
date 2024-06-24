@@ -14,8 +14,8 @@ struct Character: Identifiable {
     var isFavorite: Bool = false
 }
 
-enum Status {
-    case alive
-    case dead
-    case unknown
+enum Status: String {
+    case alive = "Alive"
+    case dead = "Dead"
+    case unknown = "Unknown"
 }

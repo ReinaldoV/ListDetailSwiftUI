@@ -18,7 +18,7 @@ struct CharactersListView: View {
     var body: some View {
         NavigationView {
             List(viewModel.characters) { character in
-                Text(character.name)
+                CharacterCellView(character: character)
                     .onAppear {
                         self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
                     }
