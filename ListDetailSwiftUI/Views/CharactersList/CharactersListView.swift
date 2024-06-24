@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct CharactersListView: View {
+    
+    @ObservedObject private var viewModel: CharactersListViewModel
+    
+    init(viewModel: CharactersListViewModel = CharactersListViewModel()) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List(viewModel.characters) { character in
+                Text(character.name)
+            }
+        }
+        .onAppear(perform: {
+            self.viewModel.loadOnFirstAppear()
+        })
     }
 }
 
