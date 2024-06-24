@@ -19,11 +19,14 @@ struct CharactersListView: View {
         NavigationView {
             List(viewModel.characters) { character in
                 Text(character.name)
+                    .onAppear {
+                        self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
+                    }
             }
         }
-        .onAppear(perform: {
+        .onAppear {
             self.viewModel.loadOnFirstAppear()
-        })
+        }
     }
 }
 

@@ -8,14 +8,7 @@
 import Combine
 import Foundation
 
-protocol CharactersListViewModelType {
-    var characters: [Character] { get }
-    var isLoading: Bool { get }
-    func loadOnFirstAppear()
-    func checkIfMoreCharactersNeedsToLoad()
-}
-
-final class CharactersListViewModel: ObservableObject, CharactersListViewModelType {
+final class CharactersListViewModel: ObservableObject {
     
     @Published var characters: [Character] = []
     @Published var isLoading: Bool = false
@@ -29,16 +22,36 @@ final class CharactersListViewModel: ObservableObject, CharactersListViewModelTy
     }
     
     func loadOnFirstAppear() {
+        askForMoreContent()
+    }
+    
+    func loadMoreContentIfNeeded(currentViewCharacter: Character?) {
+        guard let character = currentViewCharacter else {
+            // First Load
+            askForMoreContent()
+            return
+        }
+        
+        let thresholdIndex = characters.index(characters.endIndex, offsetBy: -10)
+        if characters.firstIndex(where: { $0.id == character.id }) == thresholdIndex {
+            askForMoreContent()
+        }
+    }
+    
+    private func askForMoreContent() {
+        guard !isLoading else { return }
+        
+        self.isLoading = true
+        
         let cancellable = charactersUseCase
             .callForCharacters()
+            .handleEvents(receiveOutput: { _ in
+                self.isLoading = false
+            })
             .sink { _ in
                 // Error handling
             } receiveValue: { self.characters.append(contentsOf: $0) }
         
         cancellables.append(cancellable)
-    }
-    
-    func checkIfMoreCharactersNeedsToLoad() {
-        
     }
 }

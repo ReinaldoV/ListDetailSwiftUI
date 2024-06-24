@@ -6,17 +6,20 @@
 //
 
 import Combine
+import Foundation
 
 protocol CharacterRepositoryType {
-    func callForCharacters() -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error>
+    func callForCharacters(pageNum: Int) -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error>
 }
 
 final class CharacterRepository: CharacterRepositoryType {
     
     init() {}
     
-    func callForCharacters() -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error> {
-        let request = CharacterListRequest(path: "character")
+    func callForCharacters(pageNum: Int) -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error> {
+        let request = CharacterListRequest(path: "character",
+                                           queryItems: [URLQueryItem(name: "page",
+                                                                     value: pageNum.description)])
         let service = APIService(baseURL: "https://rickandmortyapi.com/api/")
         
         return service.call(from: request)

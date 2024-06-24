@@ -22,7 +22,7 @@ struct ContentView: View {
         }
         .padding()
         .onAppear(perform: {
-            let cancellable = repo.callForCharacters().sink { error in
+            let cancellable = repo.callForCharacters(pageNum: 0).sink { error in
                 print(error)
             } receiveValue: { (info, characters) in
                 print(info)
