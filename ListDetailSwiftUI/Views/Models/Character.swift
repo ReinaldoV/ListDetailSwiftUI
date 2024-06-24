@@ -1,5 +1,5 @@
 //
-//  Character.swift
+//  CharacterDisplaymodel.swift
 //  ListDetailSwiftUI
 //
 //  Created by Villanueva, Reinaldo on 24/6/24.
@@ -11,6 +11,7 @@ struct Character {
     var status: Status
     var species: String
     var image: String
+    var isFavorite: Bool = false
 }
 
 enum Status {

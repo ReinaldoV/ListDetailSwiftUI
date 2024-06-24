@@ -8,19 +8,19 @@
 import Combine
 
 protocol CharacterRepositoryType {
-    func callForCharacters() -> AnyPublisher<(ResponseInfo, [Character]), Error>
+    func callForCharacters() -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error>
 }
 
 final class CharacterRepository: CharacterRepositoryType {
     
     init() {}
     
-    func callForCharacters() -> AnyPublisher<(ResponseInfo, [Character]), Error> {
+    func callForCharacters() -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error> {
         let request = CharacterListRequest(path: "character")
         let service = APIService(baseURL: "https://rickandmortyapi.com/api/")
         
         return service.call(from: request)
-            .map { ($0.info.toResponseInfo(), $0.results.map { $0.toCharacter() }) }
+            .map { ($0.info.toResponseInfoEntity(), $0.results.map { $0.toCharacterEntity() }) }
             .eraseToAnyPublisher()
     }
 }

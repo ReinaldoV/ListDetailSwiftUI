@@ -32,11 +32,11 @@ struct InfoDTO: Decodable {
 }
 
 extension InfoDTO {
-    func toResponseInfo() -> ResponseInfo {
-        return ResponseInfo(count: self.count,
-                            pages: self.pages,
-                            next: self.next,
-                            prev: self.prev)
+    func toResponseInfoEntity() -> ResponseInfoEntity {
+        return ResponseInfoEntity(count: self.count,
+                                  pages: self.pages,
+                                  next: self.next,
+                                  prev: self.prev)
     }
 }
 
@@ -53,7 +53,7 @@ enum StatusDTO: String, Codable {
     case dead = "Dead"
     case unknown
     
-    func toStatus() -> Status {
+    func toStatus() -> StatusEntity {
         switch self {
         case .alive:
             return .alive
@@ -66,12 +66,12 @@ enum StatusDTO: String, Codable {
 }
 
 extension CharacterDTO {
-    func toCharacter() -> Character {
-        return Character(id: self.id,
-                         name: self.name,
-                         status: self.status.toStatus(),
-                         species: self.species,
-                         image: self.image)
+    func toCharacterEntity() -> CharacterEntity {
+        return CharacterEntity(id: self.id,
+                               name: self.name,
+                               status: self.status.toStatus(),
+                               species: self.species,
+                               image: self.image)
     }
 }
 
