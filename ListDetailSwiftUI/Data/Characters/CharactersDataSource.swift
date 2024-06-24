@@ -45,7 +45,13 @@ struct CharacterDTO: Decodable {
     var name: String
     var status: StatusDTO
     var species: String
+    var location: LocationDTO
+    var episode: [String]
     var image: String
+}
+
+struct LocationDTO: Decodable {
+    var name: String
 }
 
 enum StatusDTO: String, Codable {
@@ -71,6 +77,8 @@ extension CharacterDTO {
                                name: self.name,
                                status: self.status.toStatus(),
                                species: self.species,
+                               location: self.location.name,
+                               episodes: self.episode,
                                image: self.image)
     }
 }

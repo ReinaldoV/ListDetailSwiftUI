@@ -10,6 +10,8 @@ struct CharacterEntity {
     var name: String
     var status: StatusEntity
     var species: String
+    var location: String
+    var episodes: [String]
     var image: String
 }
 
@@ -20,6 +22,8 @@ extension CharacterEntity {
                   status: self.status.toStatus(),
                   species: self.species,
                   image: self.image,
+                  location: self.location,
+                  numberFirstEpisode: self.episodes.first?.components(separatedBy: "/").last ?? "N/A",
                   isFavorite: isFavorite)
     }
 }

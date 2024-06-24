@@ -16,6 +16,7 @@ struct CharacterCellView: View {
             Text(character.name)
                 .font(.system(size: 25, weight: .bold))
                 .lineLimit(1)
+                .minimumScaleFactor(0.5)
             HStack(spacing: 10) {
                 AsyncImage(url: URL(string: character.image)){ result in
                     result.image?
@@ -28,10 +29,10 @@ struct CharacterCellView: View {
                         .padding(.top, 20)
                     Spacer()
                     extraInfo(title: "Last known location:",
-                              info: "location")
+                              info: character.location)
                     Spacer()
                     extraInfo(title: "First seen in:",
-                              info: "info")
+                              info: "Episode \(character.numberFirstEpisode)")
                     Spacer()
                 }
             }
@@ -53,8 +54,8 @@ struct CharacterCellView: View {
             Text(title).lineLimit(1)
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(.gray.gradient)
-            Text(info).lineLimit(1)
-                .font(.system(size: 13, weight: .semibold))
+            Text(info).lineLimit(3)
+                .font(.system(size: 12, weight: .semibold))
         }
     }
 }
@@ -65,5 +66,7 @@ struct CharacterCellView: View {
                                            status: .alive,
                                            species: "Alien",
                                            image: "https://rickandmortyapi.com/api/character/avatar/36.jpeg",
+                                           location: "Earth",
+                                           numberFirstEpisode: "15",
                                            isFavorite: false))
 }

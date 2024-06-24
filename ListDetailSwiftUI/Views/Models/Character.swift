@@ -11,6 +11,8 @@ struct Character: Identifiable {
     var status: Status
     var species: String
     var image: String
+    var location: String
+    var numberFirstEpisode: String
     var isFavorite: Bool = false
 }
 
