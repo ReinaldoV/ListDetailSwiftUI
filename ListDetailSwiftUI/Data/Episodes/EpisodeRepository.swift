@@ -16,21 +16,25 @@ final class EpisodeRepository: EpisodeRepositoryType {
     
     init() {}
     
-    func callForAllEpisodes() async throws -> [EpisodeEntity] {
+    func callForAllEpisodes() async throws -> [EpisodeEntity] {        
+        return try await loadEpisodesFromApi()
+    }
+    
+    private func loadEpisodesFromApi() async throws -> [EpisodeEntity] {
         var episodes = [EpisodeEntity]()
         
-        var (currentEpisodes, nextpage) = try await callForEpisodes(pageNum: "1")
+        var (currentEpisodes, nextpage) = try await callForEpisodesToTheAPI(pageNum: "1")
         episodes.append(contentsOf: currentEpisodes)
         
         while nextpage != nil {
-            (currentEpisodes, nextpage) = try await callForEpisodes(pageNum: nextpage)
+            (currentEpisodes, nextpage) = try await callForEpisodesToTheAPI(pageNum: nextpage)
             episodes.append(contentsOf: currentEpisodes)
         }
         
         return episodes
     }
     
-    private func callForEpisodes(pageNum: String?) async throws -> (episodes: [EpisodeEntity], nextPage: String?)  {
+    private func callForEpisodesToTheAPI(pageNum: String?) async throws -> (episodes: [EpisodeEntity], nextPage: String?)  {
         let request =  EpisodeListRequest(path: "episode",
                                           queryItems: [URLQueryItem(name: "page",
                                                                     value: pageNum)])
