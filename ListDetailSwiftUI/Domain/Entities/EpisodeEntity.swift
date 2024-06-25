@@ -11,3 +11,12 @@ struct EpisodeEntity {
     var airDate: String
     var episode: String
 }
+
+extension EpisodeEntity {
+    func toEpisode() -> Episode {
+        Episode(id: self.id,
+                name: self.name,
+                airDate: self.airDate,
+                episode: self.episode)
+    }
+}

@@ -80,7 +80,7 @@ extension CharacterDTO {
                                species: self.species,
                                origin: self.origin.name,
                                location: self.location.name,
-                               episodes: self.episode,
+                               episodes: self.episode.compactMap { Int($0.components(separatedBy: "/").last ?? "") },
                                image: self.image)
     }
 }

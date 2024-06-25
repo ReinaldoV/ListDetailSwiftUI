@@ -13,8 +13,12 @@ struct Character: Identifiable {
     var image: String
     var origin: String
     var location: String
-    var numberFirstEpisode: String
+    var episodes: [Int]
     var isFavorite: Bool = false
+    
+    var numberFirstEpisode: String {
+        self.episodes.first?.description ?? "N/A"
+    }
 }
 
 enum Status: String {
@@ -32,7 +36,7 @@ extension Character {
                   image: "https://rickandmortyapi.com/api/character/avatar/36.jpeg",
                   origin: "Earth",
                   location: "Earth",
-                  numberFirstEpisode: "15",
+                  episodes: [15],
                   isFavorite: false)
     }
 }

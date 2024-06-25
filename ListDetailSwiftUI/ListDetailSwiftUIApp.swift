@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct ListDetailSwiftUIApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    
     var body: some Scene {
         WindowGroup {
             CharactersListView()

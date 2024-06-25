@@ -20,7 +20,7 @@ struct CharactersListView: View {
             List(viewModel.characters) { character in
                 
                 NavigationLink {
-                    CharacterDetail(character: character)
+                    CharacterDetailView(character: character)
                 } label: {
                     CharacterCellView(character: character)
                         .onAppear {

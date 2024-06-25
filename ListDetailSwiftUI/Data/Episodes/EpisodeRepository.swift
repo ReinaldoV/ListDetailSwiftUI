@@ -9,14 +9,28 @@ import Combine
 import Foundation
 
 protocol EpisodeRepositoryType {
-    func callForEpisodes(pageNum: String) async throws -> (episodes: [EpisodeEntity], nextPage: String?)
+    func callForAllEpisodes() async throws -> [EpisodeEntity]
 }
 
 final class EpisodeRepository: EpisodeRepositoryType {
     
     init() {}
     
-    func callForEpisodes(pageNum: String) async throws -> (episodes: [EpisodeEntity], nextPage: String?)  {
+    func callForAllEpisodes() async throws -> [EpisodeEntity] {
+        var episodes = [EpisodeEntity]()
+        
+        var (currentEpisodes, nextpage) = try await callForEpisodes(pageNum: "1")
+        episodes.append(contentsOf: currentEpisodes)
+        
+        while nextpage != nil {
+            (currentEpisodes, nextpage) = try await callForEpisodes(pageNum: nextpage)
+            episodes.append(contentsOf: currentEpisodes)
+        }
+        
+        return episodes
+    }
+    
+    private func callForEpisodes(pageNum: String?) async throws -> (episodes: [EpisodeEntity], nextPage: String?)  {
         let request =  EpisodeListRequest(path: "episode",
                                           queryItems: [URLQueryItem(name: "page",
                                                                     value: pageNum)])
@@ -25,6 +39,6 @@ final class EpisodeRepository: EpisodeRepositoryType {
         let response = try await service.call(from: request)
         
         return (episodes: response.results.map { $0.toEpisodeEntity() },
-                nextPage: response.info.next?.components(separatedBy: "/").last)
+                nextPage: response.info.next?.components(separatedBy: "=").last)
     }
 }

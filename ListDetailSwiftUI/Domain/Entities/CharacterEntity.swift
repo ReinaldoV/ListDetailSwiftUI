@@ -12,7 +12,7 @@ struct CharacterEntity {
     var species: String
     var origin: String
     var location: String
-    var episodes: [String]
+    var episodes: [Int]
     var image: String
 }
 
@@ -25,7 +25,7 @@ extension CharacterEntity {
                   image: self.image,
                   origin: self.origin,
                   location: self.location,
-                  numberFirstEpisode: self.episodes.first?.components(separatedBy: "/").last ?? "N/A",
+                  episodes: self.episodes,
                   isFavorite: isFavorite)
     }
 }
