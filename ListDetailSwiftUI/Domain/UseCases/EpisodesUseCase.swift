@@ -11,7 +11,7 @@ protocol EpisodesUseCaseType {
 
 final class EpisodesUseCase: EpisodesUseCaseType {
     
-    let repository: EpisodeRepositoryType
+    let repository: EpisodesRepositoryType
     var episodes = [EpisodeEntity]()
     
     static var shared: EpisodesUseCase = {
@@ -27,7 +27,7 @@ final class EpisodesUseCase: EpisodesUseCaseType {
         return useCase
     }()
     
-    private init(repository: EpisodeRepositoryType = EpisodeRepository()) {
+    private init(repository: EpisodesRepositoryType = EpisodesRepository()) {
         self.repository = repository
     }
     

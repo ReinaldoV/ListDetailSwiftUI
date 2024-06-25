@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EpisodeListRequest: APIRequestType {
+struct EpisodesListRequest: APIRequestType {
     typealias ModelType = EpisodesListDTO
     
     var path: String

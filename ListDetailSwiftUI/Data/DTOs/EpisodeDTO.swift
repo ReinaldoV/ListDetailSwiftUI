@@ -10,7 +10,7 @@ struct EpisodesListDTO: Decodable {
     var results: [EpisodeDTO]
 }
 
-struct EpisodeDTO: Decodable {
+struct EpisodeDTO: Codable {
     var id: Int
     var name: String
     var airDate: String

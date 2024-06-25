@@ -1,5 +1,5 @@
 //
-//  EpisodeRepository.swift
+//  EpisodesRepository.swift
 //  ListDetailSwiftUI
 //
 //  Created by Villanueva, Reinaldo on 25/6/24.
@@ -8,15 +8,25 @@
 import Combine
 import Foundation
 
-protocol EpisodeRepositoryType {
+protocol EpisodesRepositoryType {
     func callForAllEpisodes() async throws -> [EpisodeEntity]
 }
 
-final class EpisodeRepository: EpisodeRepositoryType {
+final class EpisodesRepository: EpisodesRepositoryType {
     
-    init() {}
+    let episodesUserDefaultsDataSource: EpisodesUserDefaultsDataSourceType
     
-    func callForAllEpisodes() async throws -> [EpisodeEntity] {        
+    init(episodesUserDefaultsDataSource: EpisodesUserDefaultsDataSourceType = EpisodesUserDefaultsDataSource()) {
+        self.episodesUserDefaultsDataSource = episodesUserDefaultsDataSource
+    }
+    
+    func callForAllEpisodes() async throws -> [EpisodeEntity] {
+        let episodes = episodesUserDefaultsDataSource.loadEpisodes()
+        
+        if !episodes.isEmpty {
+            return episodes.map { $0.toEpisodeEntity() }
+        }
+        
         return try await loadEpisodesFromApi()
     }
     
@@ -35,12 +45,15 @@ final class EpisodeRepository: EpisodeRepositoryType {
     }
     
     private func callForEpisodesToTheAPI(pageNum: String?) async throws -> (episodes: [EpisodeEntity], nextPage: String?)  {
-        let request =  EpisodeListRequest(path: "episode",
-                                          queryItems: [URLQueryItem(name: "page",
+        let request =  EpisodesListRequest(path: "episode",
+                                           queryItems: [URLQueryItem(name: "page",
                                                                     value: pageNum)])
         let service = APIService(baseURL: "https://rickandmortyapi.com/api/")
         
         let response = try await service.call(from: request)
+        
+        // Save episodes on userDefaults
+        self.episodesUserDefaultsDataSource.saveEpisodes(episodes: response.results)
         
         return (episodes: response.results.map { $0.toEpisodeEntity() },
                 nextPage: response.info.next?.components(separatedBy: "=").last)
