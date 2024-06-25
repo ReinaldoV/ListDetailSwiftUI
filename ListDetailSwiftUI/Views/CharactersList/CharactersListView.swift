@@ -18,10 +18,15 @@ struct CharactersListView: View {
     var body: some View {
         NavigationView {
             List(viewModel.characters) { character in
-                CharacterCellView(character: character)
-                    .onAppear {
-                        self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
-                    }
+                
+                NavigationLink {
+                    CharacterDetail(character: character)
+                } label: {
+                    CharacterCellView(character: character)
+                        .onAppear {
+                            self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
+                        }
+                }
             }
         }
         .onAppear {

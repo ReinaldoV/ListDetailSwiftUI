@@ -21,3 +21,16 @@ enum Status: String {
     case dead = "Dead"
     case unknown = "Unknown"
 }
+
+extension Character {
+    static func mockCharacter() ->  Character {
+        Character(id: 36,
+                  name: "Beta-Seven",
+                  status: .alive,
+                  species: "Alien",
+                  image: "https://rickandmortyapi.com/api/character/avatar/36.jpeg",
+                  location: "Earth",
+                  numberFirstEpisode: "15",
+                  isFavorite: false)
+    }
+}
