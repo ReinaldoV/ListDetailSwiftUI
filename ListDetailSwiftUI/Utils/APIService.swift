@@ -13,6 +13,7 @@ protocol APIServiceType {
     var baseURL: String {get}
     var bgQueue: DispatchQueue {get}
     func call<Request>(from endpoint: Request) -> AnyPublisher<Request.ModelType, Error> where Request: APIRequestType
+    func call<Request>(from endpoint: Request) async throws -> Request.ModelType  where Request : APIRequestType
 }
 
 final class APIService: APIServiceType {
@@ -46,5 +47,17 @@ final class APIService: APIServiceType {
         } catch let error {
             return Fail<Request.ModelType, Error>(error: error).eraseToAnyPublisher()
         }
+    }
+    
+    func call<Request>(from endpoint: Request) async throws -> Request.ModelType  where Request : APIRequestType {
+        let request = try endpoint.buildRequest(baseURL: baseURL)
+        
+        let (data, response) = try await session.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else { throw APIServiceError.unexpectedResponse }
+        guard httpResponse.statusCode == 200 else { throw APIServiceError.httpError(httpResponse.statusCode) }
+        
+        let parsedData = try JSONDecoder().decode(Request.ModelType.self, from: data)
+        
+        return parsedData
     }
 }
