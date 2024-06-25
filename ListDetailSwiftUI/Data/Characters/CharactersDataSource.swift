@@ -45,6 +45,7 @@ struct CharacterDTO: Decodable {
     var name: String
     var status: StatusDTO
     var species: String
+    var origin: LocationDTO
     var location: LocationDTO
     var episode: [String]
     var image: String
@@ -77,6 +78,7 @@ extension CharacterDTO {
                                name: self.name,
                                status: self.status.toStatus(),
                                species: self.species,
+                               origin: self.origin.name,
                                location: self.location.name,
                                episodes: self.episode,
                                image: self.image)

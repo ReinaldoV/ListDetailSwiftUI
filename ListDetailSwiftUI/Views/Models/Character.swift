@@ -11,6 +11,7 @@ struct Character: Identifiable {
     var status: Status
     var species: String
     var image: String
+    var origin: String
     var location: String
     var numberFirstEpisode: String
     var isFavorite: Bool = false
@@ -29,6 +30,7 @@ extension Character {
                   status: .alive,
                   species: "Alien",
                   image: "https://rickandmortyapi.com/api/character/avatar/36.jpeg",
+                  origin: "Earth",
                   location: "Earth",
                   numberFirstEpisode: "15",
                   isFavorite: false)
