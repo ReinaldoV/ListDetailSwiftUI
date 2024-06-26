@@ -13,7 +13,7 @@ struct ListDetailSwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CharactersListView()
+            ContentView()
         }
     }
 }

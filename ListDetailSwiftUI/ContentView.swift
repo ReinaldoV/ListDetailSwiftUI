@@ -6,33 +6,36 @@
 //
 
 import SwiftUI
-import Combine
 
 struct ContentView: View {
-    
-    var repo = CharacterRepository()
-    @State var cancellables = [AnyCancellable]()
-    
+    @State private var selectedIndex: Int = 0
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-        .onAppear(perform: {
-            let cancellable = repo.callForCharacters(pageNum: 0).sink { error in
-                print(error)
-            } receiveValue: { (info, characters) in
-                print(info)
-                print(characters)
+        TabView(selection: $selectedIndex) {
+            NavigationStack() {
+                CharactersListView()
             }
-            cancellables.append(cancellable)
+            .tabItem {
+                Text("Explore")
+                Image(systemName: "magnifyingglass")
+                    .renderingMode(.template)
+            }
+            .tag(0)
+            
+            NavigationStack() {
+                Text("Your Favorites")
+                    .navigationTitle("Your Favorites")
+            }
+            .tabItem {
+                Label("Your Favorites", systemImage: "heart.fill")
+            }
+            .tag(1)
+        }
+        .tint(.green)
+        .onAppear(perform: {
+            UITabBar.appearance().unselectedItemTintColor = .systemBrown
+            UITabBar.appearance().backgroundColor = .systemGray4.withAlphaComponent(0.4)
+            UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemGreen]
         })
     }
-}
-
-#Preview {
-    ContentView()
 }
