@@ -34,6 +34,7 @@ struct CharacterCellView: View {
                 Image(systemName: isFavorite ? "heart.fill": "heart")
                     .foregroundStyle(isFavorite ? .green : .brown)
                     .font(.title2)
+                    .symbolEffect(.bounce, options: .speed(2), value: isFavorite)
                     .padding(.trailing, -20)
                     .onTapGesture {
                         isFavorite = viewModel.updateFavorite(character: character)
