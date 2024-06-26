@@ -18,7 +18,6 @@ struct CharactersListView: View {
     var body: some View {
         NavigationView {
             List(viewModel.characters) { character in
-                
                 NavigationLink {
                     CharacterDetailView(character: character)
                 } label: {
@@ -29,6 +28,7 @@ struct CharactersListView: View {
                 }
             }
         }
+        .padding(.top, -100)
         .onAppear {
             self.viewModel.loadOnFirstAppear()
         }

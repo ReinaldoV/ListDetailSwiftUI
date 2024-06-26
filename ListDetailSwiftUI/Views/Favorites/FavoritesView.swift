@@ -26,6 +26,7 @@ struct FavoritesView: View {
                 }
             }
         }
+        .padding(.top, -100)
         .onAppear {
             self.viewModel.refreshFavorites()
         }

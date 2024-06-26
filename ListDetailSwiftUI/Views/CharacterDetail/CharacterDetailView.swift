@@ -20,39 +20,41 @@ struct CharacterDetailView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            AsyncImage(url: URL(string: character.image)) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                ProgressView()
+        ScrollView(.vertical) {
+            VStack(alignment: .leading, spacing: 20) {
+                AsyncImage(url: URL(string: character.image)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(height: 300)
+                .clipped()
+                
+                VStack(alignment: .center){
+                    Text(character.name)
+                        .font(.system(size: 30, weight: .bold))
+                }.frame(maxWidth: .infinity)
+                
+                VStack(alignment: .leading, spacing: 20, content: {
+                    statusRow(status: character.status, species: character.species)
+                        .padding(.top, 20)
+                    extraInfo(title: "Last known location:",
+                              info: character.location)
+                    extraInfo(title: "First seen in:",
+                              info: "Episode \(character.numberFirstEpisode)")
+                    listOfEpisodes()
+                })
+                .padding(.horizontal, 20)
+                
+                Spacer()
             }
-            .frame(height: 300)
-            .clipped()
-            
-            VStack(alignment: .center){
-                Text(character.name)
-                    .font(.system(size: 30, weight: .bold))
-            }.frame(maxWidth: .infinity)
-            
-            VStack(alignment: .leading, spacing: 20, content: {
-                statusRow(status: character.status, species: character.species)
-                    .padding(.top, 20)
-                extraInfo(title: "Last known location:",
-                          info: character.location)
-                extraInfo(title: "First seen in:",
-                          info: "Episode \(character.numberFirstEpisode)")
-                listOfEpisodes()
+            .navigationTitle(character.name)
+            .onAppear(perform: {
+                viewModel.loadEpisodes()
             })
-            .padding(.horizontal, 20)
-            
-            Spacer()
         }
-        .navigationTitle(character.name)
-        .onAppear(perform: {
-            viewModel.loadEpisodes()
-        })
     }
     
     private func statusRow(status: Status, species: String) -> some View {
