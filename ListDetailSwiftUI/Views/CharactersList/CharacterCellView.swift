@@ -39,6 +39,9 @@ struct CharacterCellView: View {
                     .onTapGesture {
                         isFavorite = viewModel.updateFavorite(character: character)
                     }
+                    .onAppear {
+                        isFavorite = viewModel.isFavorite(character: character)
+                    }
             })
             HStack(spacing: 10) {
                 AsyncImage(url: URL(string: character.image)){ result in
