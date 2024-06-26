@@ -10,7 +10,37 @@ struct CharacterListDTO: Decodable {
     var results: [CharacterDTO]
 }
 
-struct CharacterDTO: Decodable {
+struct CharacterDTO: Codable {
+    
+    init(id: Int, 
+         name: String,
+         status: StatusDTO,
+         species: String,
+         origin: LocationDTO,
+         location: LocationDTO,
+         episode: [String],
+         image: String) {
+        self.id = id
+        self.name = name
+        self.status = status
+        self.species = species
+        self.origin = origin
+        self.location = location
+        self.episode = episode
+        self.image = image
+    }
+    
+    init(characterEntity: CharacterEntity) {
+        self.init(id: characterEntity.id,
+                  name: characterEntity.name,
+                  status: StatusDTO.getStatusDTO(from: characterEntity.status),
+                  species: characterEntity.species,
+                  origin: .init(name: characterEntity.origin),
+                  location: .init(name: characterEntity.location),
+                  episode: characterEntity.episodes.map { $0.description },
+                  image: characterEntity.image)
+    }
+    
     var id: Int
     var name: String
     var status: StatusDTO
@@ -21,7 +51,7 @@ struct CharacterDTO: Decodable {
     var image: String
 }
 
-struct LocationDTO: Decodable {
+struct LocationDTO: Codable {
     var name: String
 }
 
@@ -32,6 +62,17 @@ enum StatusDTO: String, Codable {
     
     func toStatus() -> StatusEntity {
         switch self {
+        case .alive:
+            return .alive
+        case .dead:
+            return .dead
+        case .unknown:
+            return .unknown
+        }
+    }
+    
+    static func getStatusDTO(from statusEntity: StatusEntity) -> StatusDTO {
+        switch statusEntity {
         case .alive:
             return .alive
         case .dead:

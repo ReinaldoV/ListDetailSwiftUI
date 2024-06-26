@@ -23,7 +23,7 @@ struct ContentView: View {
             .tag(0)
             
             NavigationStack() {
-                Text("Your Favorites")
+                FavoritesView()
                     .navigationTitle("Your Favorites")
             }
             .tabItem {

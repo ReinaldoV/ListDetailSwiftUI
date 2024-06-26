@@ -38,6 +38,11 @@
 		7CCD01B22C2971E900FAAF8C /* CharacterRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD01B12C2971E900FAAF8C /* CharacterRepository.swift */; };
 		7CCD01B52C29904E00FAAF8C /* CharacterEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD01B42C29904E00FAAF8C /* CharacterEntity.swift */; };
 		7CCD01B72C29913300FAAF8C /* ResponseInfoEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCD01B62C29913300FAAF8C /* ResponseInfoEntity.swift */; };
+		7CD4655A2C2C008100101807 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD465592C2C008100101807 /* FavoritesView.swift */; };
+		7CD4655C2C2C00F500101807 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD4655B2C2C00F500101807 /* FavoritesViewModel.swift */; };
+		7CD4655F2C2C036200101807 /* FavoritesUserDefaultsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD4655E2C2C036200101807 /* FavoritesUserDefaultsDataSource.swift */; };
+		7CD465632C2C069600101807 /* FavoritesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD465622C2C069600101807 /* FavoritesRepository.swift */; };
+		7CD465652C2C0B0400101807 /* FavoritesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD465642C2C0B0400101807 /* FavoritesUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +97,11 @@
 		7CCD01B12C2971E900FAAF8C /* CharacterRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterRepository.swift; sourceTree = "<group>"; };
 		7CCD01B42C29904E00FAAF8C /* CharacterEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterEntity.swift; sourceTree = "<group>"; };
 		7CCD01B62C29913300FAAF8C /* ResponseInfoEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseInfoEntity.swift; sourceTree = "<group>"; };
+		7CD465592C2C008100101807 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		7CD4655B2C2C00F500101807 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		7CD4655E2C2C036200101807 /* FavoritesUserDefaultsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesUserDefaultsDataSource.swift; sourceTree = "<group>"; };
+		7CD465622C2C069600101807 /* FavoritesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesRepository.swift; sourceTree = "<group>"; };
+		7CD465642C2C0B0400101807 /* FavoritesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +134,7 @@
 			children = (
 				7C0D13F22C29AFF90036A2DF /* CharactersUseCase.swift */,
 				7C3B26122C2B190F00B5F40D /* EpisodesUseCase.swift */,
+				7CD465642C2C0B0400101807 /* FavoritesUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -240,6 +251,7 @@
 		7CCD019F2C2965D400FAAF8C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7CD465582C2C006600101807 /* Favorites */,
 				7C3B26072C2AB80D00B5F40D /* CharacterDetail */,
 				7C0D13F82C29B5EE0036A2DF /* CharactersList */,
 				7C0D13F52C29B0B30036A2DF /* Models */,
@@ -259,6 +271,7 @@
 		7CCD01A12C29661000FAAF8C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				7CD4655D2C2C034200101807 /* Favorites */,
 				7C3B261B2C2B309900B5F40D /* DTOs */,
 				7C3B260B2C2AD54900B5F40D /* Episodes */,
 				7CCD01AC2C296D9200FAAF8C /* Characters */,
@@ -293,6 +306,24 @@
 				7C3B26102C2AD75700B5F40D /* EpisodeEntity.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		7CD465582C2C006600101807 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				7CD465592C2C008100101807 /* FavoritesView.swift */,
+				7CD4655B2C2C00F500101807 /* FavoritesViewModel.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		7CD4655D2C2C034200101807 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				7CD4655E2C2C036200101807 /* FavoritesUserDefaultsDataSource.swift */,
+				7CD465622C2C069600101807 /* FavoritesRepository.swift */,
+			);
+			path = Favorites;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -433,6 +464,7 @@
 				7C3B26112C2AD75700B5F40D /* EpisodeEntity.swift in Sources */,
 				7CCD01AE2C296DA000FAAF8C /* CharactersDataSource.swift in Sources */,
 				7CCD01A42C296AD100FAAF8C /* APIService.swift in Sources */,
+				7CD4655A2C2C008100101807 /* FavoritesView.swift in Sources */,
 				7CCD01B22C2971E900FAAF8C /* CharacterRepository.swift in Sources */,
 				7CCD01B72C29913300FAAF8C /* ResponseInfoEntity.swift in Sources */,
 				7C3B260F2C2AD71D00B5F40D /* EpisodesRepository.swift in Sources */,
@@ -443,12 +475,16 @@
 				7C3B26152C2B1E1D00B5F40D /* Episode.swift in Sources */,
 				7C3B261D2C2B30B500B5F40D /* EpisodeDTO.swift in Sources */,
 				7C3B26132C2B190F00B5F40D /* EpisodesUseCase.swift in Sources */,
+				7CD465652C2C0B0400101807 /* FavoritesUseCase.swift in Sources */,
+				7CD465632C2C069600101807 /* FavoritesRepository.swift in Sources */,
 				7C4A95E02C295D3E00278307 /* ListDetailSwiftUIApp.swift in Sources */,
 				7CCD01B52C29904E00FAAF8C /* CharacterEntity.swift in Sources */,
 				7C3B261A2C2B21D200B5F40D /* CharacterDetailViewModel.swift in Sources */,
+				7CD4655C2C2C00F500101807 /* FavoritesViewModel.swift in Sources */,
 				7C3B26212C2B313700B5F40D /* CharacterDTO.swift in Sources */,
 				7C3B26092C2AB85500B5F40D /* CharacterDetailView.swift in Sources */,
 				7C3B26182C2B204A00B5F40D /* AppDelegate.swift in Sources */,
+				7CD4655F2C2C036200101807 /* FavoritesUserDefaultsDataSource.swift in Sources */,
 				7C0D13FE2C29D6EC0036A2DF /* CharacterCellView.swift in Sources */,
 				7C0D13F72C29B0FB0036A2DF /* Character.swift in Sources */,
 			);
