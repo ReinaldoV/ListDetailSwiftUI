@@ -86,8 +86,17 @@ struct CharacterDetailView: View {
                 LazyHStack(spacing: 20) {
                     ForEach(viewModel.episodes, id: \.id) { episode in
                         episodeCell(episode: episode)
-                            .frame(width: 200)
-                            .border(.gray)
+                            .frame(width: 214, height: 108)
+                            .background(Color(UIColor.systemGray6))
+                            .clipShape(
+                                .rect(
+                                    topLeadingRadius: 20,
+                                    bottomLeadingRadius: 20,
+                                    bottomTrailingRadius: 20,
+                                    topTrailingRadius: 20
+                                )
+                            )
+                            .padding(.vertical, 10)
                     }
                     .listStyle(.plain)
                 }
@@ -103,6 +112,7 @@ struct CharacterDetailView: View {
                 Text(episode.name)
                     .lineLimit(5)
                     .font(.system(size: 18, weight: .regular))
+                Spacer()
             })
             
             HStack(alignment: .top, spacing: 0, content: {
@@ -111,8 +121,11 @@ struct CharacterDetailView: View {
                 Text(episode.episode)
                     .lineLimit(5)
                     .font(.system(size: 18, weight: .regular))
+                Spacer()
             })
         }
+        .padding(.vertical, 4)
+        .padding(.horizontal, 7)
     }
 }
 
