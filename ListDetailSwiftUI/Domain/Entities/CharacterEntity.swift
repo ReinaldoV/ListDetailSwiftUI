@@ -55,8 +55,7 @@ extension CharacterEntity {
                   image: self.image,
                   origin: self.origin,
                   location: self.location,
-                  episodes: self.episodes,
-                  isFavorite: isFavorite)
+                  episodes: self.episodes)
     }
 }
 

@@ -14,7 +14,6 @@ struct Character: Identifiable {
     var origin: String
     var location: String
     var episodes: [Int]
-    var isFavorite: Bool = false
     
     var numberFirstEpisode: String {
         self.episodes.first?.description ?? "N/A"
@@ -36,7 +35,6 @@ extension Character {
                   image: "https://rickandmortyapi.com/api/character/avatar/36.jpeg",
                   origin: "Earth",
                   location: "Earth",
-                  episodes: [15],
-                  isFavorite: false)
+                  episodes: [15])
     }
 }

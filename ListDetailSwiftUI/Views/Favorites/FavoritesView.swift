@@ -23,14 +23,11 @@ struct FavoritesView: View {
                     CharacterDetailView(character: character)
                 } label: {
                     CharacterCellView(character: character)
-                        .onAppear {
-//                            self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
-                        }
                 }
             }
         }
         .onAppear {
-//            self.viewModel.loadOnFirstAppear()
+            self.viewModel.refreshFavorites()
         }
     }
 }

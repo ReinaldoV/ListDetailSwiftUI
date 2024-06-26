@@ -6,6 +6,7 @@
 //
 
 protocol FavoritesUseCaseType {
+    func isFavorite(favorite: Character) -> Bool
     func saveFavorite(favorite: Character)
     func loadFavorites() -> [Character]
     func deleteFavorite(favorite: Character)
@@ -19,6 +20,10 @@ final class FavoritesUseCase: FavoritesUseCaseType {
         self.repository = repository
     }
     
+    func isFavorite(favorite: Character) -> Bool {
+        let favorites = loadFavorites()
+        return favorites.contains { $0.id == favorite.id }
+    }
     
     func saveFavorite(favorite: Character) {
         repository.saveFavorite(favorite: .init(character: favorite))

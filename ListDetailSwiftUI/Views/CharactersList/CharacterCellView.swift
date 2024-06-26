@@ -9,14 +9,36 @@ import SwiftUI
 
 struct CharacterCellView: View {
     
+    @ObservedObject private var viewModel: FavoritesViewModel
+    @State private var isFavorite: Bool
     let character: Character
+    
+    init(character: Character,
+         viewModel: FavoritesViewModel = FavoritesViewModel()) {
+        self.character = character
+        self.viewModel = viewModel
+        
+        isFavorite = viewModel.isFavorite(character: character)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(character.name)
-                .font(.system(size: 25, weight: .bold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+            HStack(spacing: 0, content: {
+                Text(character.name)
+                    .font(.system(size: 25, weight: .bold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                
+                Spacer()
+                
+                Image(systemName: isFavorite ? "heart.fill": "heart")
+                    .foregroundStyle(isFavorite ? .green : .brown)
+                    .font(.title2)
+                    .padding(.trailing, -20)
+                    .onTapGesture {
+                        isFavorite = viewModel.updateFavorite(character: character)
+                    }
+            })
             HStack(spacing: 10) {
                 AsyncImage(url: URL(string: character.image)){ result in
                     result.image?
