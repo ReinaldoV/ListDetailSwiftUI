@@ -14,14 +14,22 @@ final class CharacterDetailViewModel: ObservableObject {
     private let episodesUseCase: EpisodesUseCaseType
     private let character: Character
     
-    init(episodesUseCase: EpisodesUseCaseType = EpisodesUseCase.shared, character: Character) {
+    init(episodesUseCase: EpisodesUseCaseType = EpisodesUseCase(),
+         character: Character) {
         self.episodesUseCase = episodesUseCase
         self.character = character
     }
     
     func loadEpisodes() {
-        print(episodes)
-        episodes.append(contentsOf: character.episodes.compactMap({ episodesUseCase.getEpisode(byId: $0) }))
-        print(episodes)
+        for episodeId in character.episodes {
+            Task {
+                if let episode = await episodesUseCase.getEpisode(byId: episodeId){
+                    await MainActor.run {
+                        self.episodes.append(episode)
+                        episodes.sort { $0.id < $1.id}
+                    }
+                }
+            }
+        }
     }
 }

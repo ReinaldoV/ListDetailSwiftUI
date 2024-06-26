@@ -10,8 +10,6 @@ import SwiftUI
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
-    let episodesUseCaseSingleton = EpisodesUseCase.shared
-    
     func application(_ application: UIApplication, 
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         return true

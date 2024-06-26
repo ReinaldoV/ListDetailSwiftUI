@@ -13,7 +13,7 @@ protocol EpisodesUserDefaultsDataSourceType {
     func deleteEpisodes()
 }
 
-class EpisodesUserDefaultsDataSource: EpisodesUserDefaultsDataSourceType {
+final class EpisodesUserDefaultsDataSource: EpisodesUserDefaultsDataSourceType {
 
     let episodesKey = "episodesKey"
 

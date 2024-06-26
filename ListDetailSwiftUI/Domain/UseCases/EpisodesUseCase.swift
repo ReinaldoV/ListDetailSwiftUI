@@ -6,32 +6,21 @@
 //
 
 protocol EpisodesUseCaseType {
-    func getEpisode(byId: Int) -> Episode?
+    func getEpisode(byId: Int) async -> Episode?
 }
 
 final class EpisodesUseCase: EpisodesUseCaseType {
     
     let repository: EpisodesRepositoryType
-    var episodes = [EpisodeEntity]()
-    
-    static var shared: EpisodesUseCase = {
-        let useCase = EpisodesUseCase()
-        Task {
-            do {
-                useCase.episodes = try await useCase.repository.callForAllEpisodes()
-                print(useCase.episodes)
-            } catch {
-                print("Error while retrieving the episodes")
-            }
-        }
-        return useCase
-    }()
-    
-    private init(repository: EpisodesRepositoryType = EpisodesRepository()) {
+    init(repository: EpisodesRepositoryType = EpisodesRepository()) {
         self.repository = repository
     }
     
-    func getEpisode(byId id: Int) -> Episode? {
-        episodes.first { $0.id == id }?.toEpisode()
+    func getEpisode(byId id: Int) async -> Episode? {
+        do {
+            return try await repository.getEpisode(byId: id)?.toEpisode()
+        } catch {
+            return nil
+        }
     }
 }
