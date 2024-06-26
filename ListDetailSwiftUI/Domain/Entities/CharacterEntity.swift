@@ -47,7 +47,7 @@ struct CharacterEntity {
 }
 
 extension CharacterEntity {
-    func toCharacter(isFavorite: Bool = false) -> Character {
+    func toCharacter() -> Character {
         Character(id: self.id,
                   name: self.name,
                   status: self.status.toStatus(),
