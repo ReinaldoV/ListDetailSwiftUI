@@ -49,14 +49,16 @@ struct CharactersListView: View {
                     } label: {
                         CharacterCellView(character: character)
                             .onAppear {
-                                self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
+                                self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character, withSearch: Search(query: searchText,
+                                                                                                                           type: searchTypeSelected))
                             }
                     }
                 }
             }
         }
         .onAppear {
-            self.viewModel.loadOnFirstAppear()
+            self.viewModel.loadNewCharacters(withSearch: Search(query: searchText,
+                                                                type: searchTypeSelected))
         }
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
@@ -69,12 +71,12 @@ struct CharactersListView: View {
         delayedSearchTask?.cancel()
         delayedSearchTask = Task {
             do {
-                try await Task.sleep(nanoseconds: 3 * 1_000_000_000)
+                try await Task.sleep(nanoseconds: 700_000_000)
                 runSearch()
             } catch is CancellationError {
-                print("Task was cancelled")
+                // Task cancelled
             } catch {
-                print("ooops! \(error)")
+                // Unexpected error
             }
         }
     }
@@ -85,7 +87,8 @@ struct CharactersListView: View {
     }
     
     private func runSearch() {
-        print("Buscando...")
+        self.viewModel.loadNewCharacters(withSearch: Search(query: searchText,
+                                                            type: searchTypeSelected))
     }
 }
 

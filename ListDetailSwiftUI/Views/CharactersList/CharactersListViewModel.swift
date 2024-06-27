@@ -8,13 +8,6 @@
 import Combine
 import Foundation
 
-enum SearchType: String, Identifiable, CaseIterable {
-    case name = "Name"
-    case status = "Status"
-    
-    var id: Self { self }
-}
-
 final class CharactersListViewModel: ObservableObject {
     
     @Published var characters: [Character] = []
@@ -28,30 +21,31 @@ final class CharactersListViewModel: ObservableObject {
         self.charactersUseCase = charactersUseCase
     }
     
-    func loadOnFirstAppear() {
-        askForMoreContent()
+    func loadNewCharacters(withSearch search: Search) {
+        characters = []
+        askForMoreContent(withSearch: search)
     }
     
-    func loadMoreContentIfNeeded(currentViewCharacter: Character?) {
+    func loadMoreContentIfNeeded(currentViewCharacter: Character?, withSearch search: Search) {
         guard let character = currentViewCharacter else {
             // First Load
-            askForMoreContent()
+            askForMoreContent(withSearch: search)
             return
         }
         
         let thresholdIndex = characters.index(characters.endIndex, offsetBy: -10)
         if characters.firstIndex(where: { $0.id == character.id }) == thresholdIndex {
-            askForMoreContent()
+            askForMoreContent(withSearch: search)
         }
     }
     
-    private func askForMoreContent() {
+    private func askForMoreContent(withSearch search: Search) {
         guard !isLoading else { return }
         
         self.isLoading = true
         
         let cancellable = charactersUseCase
-            .callForCharacters()
+            .callForCharacters(withSearch: search)
             .handleEvents(receiveOutput: { _ in
                 self.isLoading = false
             })
