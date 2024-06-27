@@ -5,7 +5,7 @@
 //  Created by Villanueva, Reinaldo on 27/6/24.
 //
 
-struct Search {
+struct Search: Equatable {
     let query: String
     let type: SearchType
 }

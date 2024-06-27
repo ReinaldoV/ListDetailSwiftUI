@@ -61,7 +61,21 @@ struct CharactersListView: View {
                                                                 type: searchTypeSelected))
         }
         .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always)) {
+//            There are three ways to dismiss a suggestion view.
+//
+//            As mentioned earlier, search suggestions will dismiss when no content in the suggestion block.
+//            Tap the cancel button, which will also clear the search field.
+//            Tap the return key, which will dismiss the suggestions will while preserving the current search string.
+            if searchTypeSelected == .status &&
+                searchText.lowercased() != "alive" &&
+                searchText.lowercased() != "dead" &&
+                searchText.lowercased() != "unknown" {
+                Text("Alive").searchCompletion("Alive")
+                Text("Dead").searchCompletion("Dead")
+                Text("Unknown").searchCompletion("Unknown")
+            }
+        }
         .onSubmit(of: .search, submitSearch)
         .onChange(of: searchText, runDelayedSearch)
         

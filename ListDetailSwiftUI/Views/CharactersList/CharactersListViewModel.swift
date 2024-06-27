@@ -12,6 +12,7 @@ final class CharactersListViewModel: ObservableObject {
     
     @Published var characters: [Character] = []
     @Published var isLoading: Bool = false
+    private var lastSearch: Search?
     
     private let charactersUseCase: CharactersUseCaseType
     
@@ -22,7 +23,10 @@ final class CharactersListViewModel: ObservableObject {
     }
     
     func loadNewCharacters(withSearch search: Search) {
-        characters = []
+        if search != lastSearch {
+            lastSearch = search
+            characters = []
+        }
         askForMoreContent(withSearch: search)
     }
     
@@ -50,7 +54,7 @@ final class CharactersListViewModel: ObservableObject {
                 self.isLoading = false
             })
             .sink { _ in
-                // Error handling
+                self.isLoading = false
             } receiveValue: { self.characters.append(contentsOf: $0) }
         
         cancellables.append(cancellable)
