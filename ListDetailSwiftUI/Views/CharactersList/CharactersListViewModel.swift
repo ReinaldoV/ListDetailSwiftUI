@@ -8,6 +8,13 @@
 import Combine
 import Foundation
 
+enum SearchType: String, Identifiable, CaseIterable {
+    case name = "Name"
+    case status = "Status"
+    
+    var id: Self { self }
+}
+
 final class CharactersListViewModel: ObservableObject {
     
     @Published var characters: [Character] = []

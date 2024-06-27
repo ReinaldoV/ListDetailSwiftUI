@@ -10,6 +10,7 @@ import SwiftUI
 struct CharactersListView: View {
     
     @State private var searchText = ""
+    @State private var searchTypeSelected: SearchType = .name
     @ObservedObject private var viewModel: CharactersListViewModel
     @State var delayedSearchTask: Task<(), any Error>?
     
@@ -19,14 +20,38 @@ struct CharactersListView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.characters) { character in
-                NavigationLink {
-                    CharacterDetailView(character: character)
-                } label: {
-                    CharacterCellView(character: character)
-                        .onAppear {
-                            self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
+            VStack(alignment: .leading) {
+                Text("Search by...")
+                    .font(.system(size: 10, weight: .thin))
+                    .padding(.leading, 15)
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(SearchType.allCases) { type in
+                            Text(type.rawValue)
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundStyle(type == searchTypeSelected ? .white : .black)
+                                .padding(.horizontal, 15)
+                                .padding(.vertical, 10)
+                                .background(
+                                    type == searchTypeSelected ? Color.brown : Color(UIColor.systemGray6)
+                                )
+                                .clipShape(.capsule)
+                                .onTapGesture {
+                                    searchTypeSelected = type
+                                }
                         }
+                    }
+                    .padding(.horizontal, 15)
+                }
+                List(viewModel.characters) { character in
+                    NavigationLink {
+                        CharacterDetailView(character: character)
+                    } label: {
+                        CharacterCellView(character: character)
+                            .onAppear {
+                                self.viewModel.loadMoreContentIfNeeded(currentViewCharacter: character)
+                            }
+                    }
                 }
             }
         }
