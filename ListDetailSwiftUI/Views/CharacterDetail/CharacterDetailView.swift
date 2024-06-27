@@ -10,27 +10,63 @@ import SwiftUI
 struct CharacterDetailView: View {
     
     @ObservedObject private var viewModel: CharacterDetailViewModel
+    @State private var isFavorite: Bool
     
     let character: Character
     
     init(character: Character,
          viewModel: CharacterDetailViewModel? = nil) {
         self.character = character
-        self.viewModel = viewModel ?? CharacterDetailViewModel(character: character)
+        let viewModel = viewModel ?? CharacterDetailViewModel(character: character)
+        self.viewModel = viewModel
+        
+        isFavorite = viewModel.isFavorite(character: character)
     }
     
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: 20) {
+                ZStack {
                 AsyncImage(url: URL(string: character.image)) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 } placeholder: {
-                    ProgressView()
+                    VStack(alignment: .center) {
+                        Spacer()
+                        HStack(alignment: .center) {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        Spacer()
+                    }
                 }
                 .frame(height: 300)
                 .clipped()
+                    
+                    VStack(alignment: .trailing, spacing: 0) {
+                        HStack(alignment: .top, spacing: 0) {
+                            Spacer()
+                            Image(systemName: isFavorite ? "heart.fill": "heart")
+                                .foregroundStyle(isFavorite ? .green : .gray)
+                                .font(.largeTitle)
+                                .symbolEffect(.bounce, options: .speed(2), value: isFavorite)
+                                .padding(5)
+                                .padding(.top, 2)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .padding(15)
+                                .onTapGesture {
+                                    isFavorite = viewModel.updateFavorite(character: character)
+                                }
+                                .onAppear {
+                                    isFavorite = viewModel.isFavorite(character: character)
+                                }
+                        }
+                        Spacer()
+                    }
+            }
                 
                 VStack(alignment: .center){
                     Text(character.name)
