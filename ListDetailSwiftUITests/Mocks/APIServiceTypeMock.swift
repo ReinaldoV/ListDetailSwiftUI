@@ -1,5 +1,5 @@
 //
-//  ApiMock.swift
+//  APIServiceTypeMock.swift
 //  ListDetailSwiftUITests
 //
 //  Created by Villanueva, Reinaldo on 28/6/24.
