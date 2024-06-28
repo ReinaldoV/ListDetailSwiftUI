@@ -7,6 +7,7 @@ import UIKit
 import AppKit
 #endif
 
+import Combine
 
 @testable import ListDetailSwiftUI
 
@@ -24,97 +25,6 @@ import AppKit
 
 
 
-class APIRequestTypeMock: APIRequestType {
-    var path: String {
-        get { return underlyingPath }
-        set(value) { underlyingPath = value }
-    }
-    var underlyingPath: String!
-    var method: String {
-        get { return underlyingMethod }
-        set(value) { underlyingMethod = value }
-    }
-    var underlyingMethod: String!
-    var headers: [String: String]?
-    var queryItems: [URLQueryItem]?
-
-    //MARK: - body
-
-    var bodyThrowableError: Error?
-    var bodyCallsCount = 0
-    var bodyCalled: Bool {
-        return bodyCallsCount > 0
-    }
-    var bodyReturnValue: Data?
-    var bodyClosure: (() throws -> Data?)?
-
-    func body() throws -> Data? {
-        bodyCallsCount += 1
-        if let error = bodyThrowableError {
-            throw error
-        }
-        return try bodyClosure.map({ try $0() }) ?? bodyReturnValue
-    }
-
-}
-class APIServiceTypeMock: APIServiceType {
-    var session: URLSession {
-        get { return underlyingSession }
-        set(value) { underlyingSession = value }
-    }
-    var underlyingSession: URLSession!
-    var baseURL: String {
-        get { return underlyingBaseURL }
-        set(value) { underlyingBaseURL = value }
-    }
-    var underlyingBaseURL: String!
-    var bgQueue: DispatchQueue {
-        get { return underlyingBgQueue }
-        set(value) { underlyingBgQueue = value }
-    }
-    var underlyingBgQueue: DispatchQueue!
-
-    //MARK: - call<Request>
-
-    var callFromCallsCount = 0
-    var callFromCalled: Bool {
-        return callFromCallsCount > 0
-    }
-    var callFromReceivedEndpoint: Request?
-    var callFromReceivedInvocations: [Request] = []
-    var callFromReturnValue: AnyPublisher<Request.ModelType, Error> where Request: APIRequestType!
-    var callFromClosure: ((Request) -> AnyPublisher<Request.ModelType, Error> where Request: APIRequestType)?
-
-    func call<Request>(from endpoint: Request) -> AnyPublisher<Request.ModelType, Error> where Request: APIRequestType {
-        callFromCallsCount += 1
-        callFromReceivedEndpoint = endpoint
-        callFromReceivedInvocations.append(endpoint)
-        return callFromClosure.map({ $0(endpoint) }) ?? callFromReturnValue
-    }
-
-    //MARK: - call<Request>
-
-    var callFromThrowableError: Error?
-    var callFromCallsCount = 0
-    var callFromCalled: Bool {
-        return callFromCallsCount > 0
-    }
-    var callFromReceivedEndpoint: Request?
-    var callFromReceivedInvocations: [Request] = []
-    var callFromReturnValue: Request.ModelType where Request : APIRequestType!
-    var callFromClosure: ((Request) throws -> Request.ModelType where Request : APIRequestType)?
-
-    func call<Request>(from endpoint: Request) throws -> Request.ModelType where Request : APIRequestType {
-        callFromCallsCount += 1
-        callFromReceivedEndpoint = endpoint
-        callFromReceivedInvocations.append(endpoint)
-        if let error = callFromThrowableError {
-            throw error
-        }
-        return try callFromClosure.map({ try $0(endpoint) }) ?? callFromReturnValue
-    }
-
-}
 class CharacterRepositoryTypeMock: CharacterRepositoryType {
 
     //MARK: - callForCharacters
