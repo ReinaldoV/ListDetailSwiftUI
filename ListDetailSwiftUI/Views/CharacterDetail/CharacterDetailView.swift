@@ -43,7 +43,7 @@ struct CharacterDetailView: View {
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                        case .failure(let error):
+                        case .failure(_):
                             Image("default")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
