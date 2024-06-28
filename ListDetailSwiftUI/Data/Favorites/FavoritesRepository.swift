@@ -5,7 +5,7 @@
 //  Created by Villanueva, Reinaldo on 26/6/24.
 //
 
-protocol FavoritesRepositoryType {
+protocol FavoritesRepositoryType: AutoMockable {
     func saveFavorite(favorite: CharacterEntity)
     func loadFavorites() -> [CharacterEntity]
     func deleteFavorite(favorite: CharacterEntity)

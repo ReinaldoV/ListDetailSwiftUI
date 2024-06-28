@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FavoritesUserDefaultsDataSourceType {
+protocol FavoritesUserDefaultsDataSourceType: AutoMockable {
     func saveFavorite(favorite: CharacterDTO)
     func loadFavorites() -> [CharacterDTO]
     func deleteFavorite(favorite: CharacterDTO)
