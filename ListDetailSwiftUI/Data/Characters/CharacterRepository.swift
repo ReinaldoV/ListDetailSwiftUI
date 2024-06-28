@@ -14,7 +14,11 @@ protocol CharacterRepositoryType: AutoMockable {
 
 final class CharacterRepository: CharacterRepositoryType {
     
-    init() {}
+    let service: APIServiceType
+    
+    init(service: APIServiceType = APIService(baseURL: "https://rickandmortyapi.com/api/")) {
+        self.service = service
+    }
     
     func callForCharacters(pageNum: Int, withSearch search: SearchEntity) -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error> {
         var queryItems = [URLQueryItem(name: "page",
@@ -25,7 +29,6 @@ final class CharacterRepository: CharacterRepositoryType {
         }
         let request = CharacterListRequest(path: "character",
                                            queryItems: queryItems)
-        let service = APIService(baseURL: "https://rickandmortyapi.com/api/")
         
         return service.call(from: request)
             .map { ($0.info.toResponseInfoEntity(), $0.results.map { $0.toCharacterEntity() }) }
