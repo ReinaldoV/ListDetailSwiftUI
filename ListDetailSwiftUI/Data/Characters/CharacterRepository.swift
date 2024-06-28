@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol CharacterRepositoryType {
+protocol CharacterRepositoryType: AutoMockable {
     func callForCharacters(pageNum: Int, withSearch: SearchEntity) -> AnyPublisher<(ResponseInfoEntity, [CharacterEntity]), Error>
 }
 

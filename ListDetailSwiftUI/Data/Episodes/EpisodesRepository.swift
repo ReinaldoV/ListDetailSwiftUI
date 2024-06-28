@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-protocol EpisodesRepositoryType {
+protocol EpisodesRepositoryType: AutoMockable {
     func getEpisode(byId id: Int) async throws -> EpisodeEntity?
     func callForAllEpisodes() async throws -> [EpisodeEntity]
 }

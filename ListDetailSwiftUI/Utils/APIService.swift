@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol APIServiceType {
+protocol APIServiceType: AutoMockable {
     var session: URLSession {get}
     var baseURL: String {get}
     var bgQueue: DispatchQueue {get}

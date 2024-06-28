@@ -7,7 +7,7 @@
 
 import Combine
 
-protocol CharactersUseCaseType {
+protocol CharactersUseCaseType: AutoMockable {
     func callForCharacters(withSearch search: Search) -> AnyPublisher<[Character], Error>
 }
 

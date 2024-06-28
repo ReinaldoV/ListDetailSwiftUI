@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol APIRequestType {
+protocol APIRequestType: AutoMockable {
     associatedtype ModelType: Decodable
     
     var path: String {get}

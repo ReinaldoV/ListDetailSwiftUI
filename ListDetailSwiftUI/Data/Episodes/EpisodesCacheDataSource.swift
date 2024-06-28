@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EpisodesCacheDataSourceType {
+protocol EpisodesCacheDataSourceType: AutoMockable {
     func setCache(episodes: [EpisodeDTO])
     func loadEpisodes() -> [EpisodeDTO]?
 }

@@ -5,7 +5,7 @@
 //  Created by Villanueva, Reinaldo on 26/6/24.
 //
 
-protocol FavoritesUseCaseType {
+protocol FavoritesUseCaseType: AutoMockable {
     func isFavorite(favorite: Character) -> Bool
     func saveFavorite(favorite: Character)
     func loadFavorites() -> [Character]

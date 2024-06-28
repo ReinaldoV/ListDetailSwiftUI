@@ -5,7 +5,7 @@
 //  Created by Villanueva, Reinaldo on 25/6/24.
 //
 
-protocol EpisodesUseCaseType {
+protocol EpisodesUseCaseType: AutoMockable {
     func getEpisode(byId: Int) async -> Episode?
 }
 

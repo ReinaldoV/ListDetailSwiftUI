@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EpisodesUserDefaultsDataSourceType {
+protocol EpisodesUserDefaultsDataSourceType: AutoMockable {
     func saveEpisodes(episodes: [EpisodeDTO])
     func loadEpisodes() -> [EpisodeDTO]
     func deleteEpisodes()
