@@ -17,11 +17,14 @@ final class EpisodesRepository: EpisodesRepositoryType {
     
     let userDefaultsDataSource: EpisodesUserDefaultsDataSourceType
     let cacheDataSource: EpisodesCacheDataSourceType
+    let service: APIServiceType
     
     init(userDefaultsDataSource: EpisodesUserDefaultsDataSourceType = EpisodesUserDefaultsDataSource(),
-         cacheDataSource: EpisodesCacheDataSourceType = EpisodesCacheDataSource.shared) {
+         cacheDataSource: EpisodesCacheDataSourceType = EpisodesCacheDataSource.shared,
+         service: APIServiceType = APIService(baseURL: "https://rickandmortyapi.com/api/")) {
         self.userDefaultsDataSource = userDefaultsDataSource
         self.cacheDataSource = cacheDataSource
+        self.service = service
     }
     
     func getEpisode(byId id: Int) async throws -> EpisodeEntity? {
@@ -68,8 +71,6 @@ final class EpisodesRepository: EpisodesRepositoryType {
         let request =  EpisodesListRequest(path: "episode",
                                            queryItems: [URLQueryItem(name: "page",
                                                                      value: pageNum)])
-        let service = APIService(baseURL: "https://rickandmortyapi.com/api/")
-        
         let response = try await service.call(from: request)
         
         // Save episodes on userDefaults

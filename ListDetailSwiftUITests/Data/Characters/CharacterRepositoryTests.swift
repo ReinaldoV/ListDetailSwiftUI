@@ -11,12 +11,12 @@ import Combine
 
 class CharacterRepositoryTests: XCTestCase {
     var sut: CharacterRepository!
-    private var apiServiceMock: APIServiceTypeMock!
+    private var apiServiceMock: APIServiceCharacterTypeMock!
     
     override func setUp() {
         super.setUp()
         
-        apiServiceMock = APIServiceTypeMock()
+        apiServiceMock = APIServiceCharacterTypeMock()
         
         sut = CharacterRepository(service: apiServiceMock)
     }

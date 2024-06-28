@@ -1,5 +1,5 @@
 //
-//  APIServiceTypeMock.swift
+//  APIServiceEpisodeTypeMock.swift
 //  ListDetailSwiftUITests
 //
 //  Created by Villanueva, Reinaldo on 28/6/24.
@@ -9,9 +9,9 @@
 import Combine
 import Foundation
 
-class APIServiceTypeMock: APIServiceType {
-    typealias Request = CharacterListRequest
-    typealias ModelType = CharacterListDTO
+class APIServiceEpisodeTypeMock: APIServiceType {
+    typealias Request = EpisodesListRequest
+    typealias ModelType = EpisodesListDTO
     var session: URLSession {
         get { return underlyingSession }
         set(value) { underlyingSession = value }
@@ -42,8 +42,8 @@ class APIServiceTypeMock: APIServiceType {
 
     func call<Request>(from endpoint: Request) -> AnyPublisher<Request.ModelType, Error> where Request: APIRequestType {
         callFromCallsCount += 1
-        callFromReceivedEndpoint = endpoint as? CharacterListRequest
-        callFromReceivedInvocations.append(endpoint as! CharacterListRequest)
+        callFromReceivedEndpoint = endpoint as? EpisodesListRequest
+        callFromReceivedInvocations.append(endpoint as! EpisodesListRequest)
         return callFromReturnValue as! AnyPublisher<Request.ModelType, Error>
     }
 
@@ -54,8 +54,8 @@ class APIServiceTypeMock: APIServiceType {
 
     func call<Request>(from endpoint: Request) throws -> Request.ModelType where Request : APIRequestType {
         callFromCallsCount += 1
-        callFromReceivedEndpoint = endpoint as? CharacterListRequest
-        callFromReceivedInvocations.append(endpoint as! CharacterListRequest)
+        callFromReceivedEndpoint = endpoint as? EpisodesListRequest
+        callFromReceivedInvocations.append(endpoint as! EpisodesListRequest)
         if let error = callFromThrowableError {
             throw error
         }
