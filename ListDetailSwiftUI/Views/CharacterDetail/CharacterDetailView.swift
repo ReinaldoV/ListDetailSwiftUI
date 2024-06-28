@@ -27,23 +27,34 @@ struct CharacterDetailView: View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: 20) {
                 ZStack {
-                AsyncImage(url: URL(string: character.image)) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    VStack(alignment: .center) {
-                        Spacer()
-                        HStack(alignment: .center) {
-                            Spacer()
-                            ProgressView()
-                            Spacer()
+                    AsyncImage(url: URL(string: character.image)) { phase in
+                        switch phase {
+                        case .empty:
+                            VStack(alignment: .center) {
+                                Spacer()
+                                HStack(alignment: .center) {
+                                    Spacer()
+                                    ProgressView()
+                                    Spacer()
+                                }
+                                Spacer()
+                            }
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        case .failure(let error):
+                            Image("default")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        @unknown default:
+                            Image("default")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
                         }
-                        Spacer()
                     }
-                }
-                .frame(height: 300)
-                .clipped()
+                    .frame(height: 300)
+                    .clipped()
                     
                     VStack(alignment: .trailing, spacing: 0) {
                         HStack(alignment: .top, spacing: 0) {
@@ -66,7 +77,7 @@ struct CharacterDetailView: View {
                         }
                         Spacer()
                     }
-            }
+                }
                 
                 VStack(alignment: .center){
                     Text(character.name)

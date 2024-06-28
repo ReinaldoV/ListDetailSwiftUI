@@ -44,10 +44,31 @@ struct CharacterCellView: View {
                     }
             })
             HStack(spacing: 10) {
-                AsyncImage(url: URL(string: character.image)){ result in
-                    result.image?
-                        .resizable()
-                        .scaledToFill()
+                AsyncImage(url: URL(string: character.image)){ phase in
+                    switch phase {
+                    case .empty:
+                        VStack(alignment: .center) {
+                            Spacer()
+                            HStack(alignment: .center) {
+                                Spacer()
+                                ProgressView()
+                                Spacer()
+                            }
+                            Spacer()
+                        }
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    case .failure(let error):
+                        Image("default")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    @unknown default:
+                        Image("default")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }
                 }
                 .frame(width: 150, height: 150)
                 VStack(alignment: .leading, spacing: 0) {
