@@ -5,7 +5,7 @@
 //  Created by Villanueva, Reinaldo on 24/6/24.
 //
 
-struct CharacterEntity {
+struct CharacterEntity: Equatable {
     
     init(id: Int, 
          name: String,
